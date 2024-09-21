@@ -19,13 +19,13 @@ namespace MobilePlatformTools
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		/// <param name="listener">初始化回调</param>
-		void Init(IBridgeListener listener);
+		/// <param name="option">初始化参数</param>
+		void Init(InitializationOption option);
 
 		/// <summary>
 		/// 振动
 		/// </summary>
-		/// <param name="effectType">振动类型</param>
-		void Vibrator(VibratorEffectType effectType);
+		/// <param name="option">振动参数</param>
+		void Vibrator(VibratorOption option);
 	}
 }

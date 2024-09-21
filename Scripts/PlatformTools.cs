@@ -15,6 +15,12 @@ namespace MobilePlatformTools
 	/// </summary>
 	public static class PlatformTools
 	{
+		public const string RESPONSE_PROPERTY_NAME_CODE = "code";
+		public const string RESPONSE_PROPERTY_NAME_MSG = "msg";
+		public const string RESPONSE_PROPERTY_NAME_DATA = "data";
+		public const int RESPONSE_CODE_SUCCESS = 0;
+		public const int RESPONSE_CODE_ERROR = -1;
+		
 		private static IBridge _bridge;
 
 		private static IBridge Bridge
@@ -39,26 +45,19 @@ namespace MobilePlatformTools
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		/// <param name="listener">初始化回调</param>
-		public static void Init(IBridgeListener listener)
+		/// <param name="option">初始化参数</param>
+		public static void Init(InitializationOption option)
 		{
-			Bridge.Init(listener);
+			Bridge.Init(option);
 		}
 
 		/// <summary>
 		/// 振动
 		/// </summary>
-		/// <param name="effectType">振动类型</param>
-		public static void Vibrator(VibratorEffectType effectType)
+		/// <param name="option">振动参数</param>
+		public static void Vibrator(VibratorOption option)
 		{
-			Bridge.Vibrator(effectType);
+			Bridge.Vibrator(option);
 		}
-	}
-
-	public enum VibratorEffectType
-	{
-		Low = 1,
-		Middle = 2,
-		High = 3
 	}
 }

@@ -12,7 +12,6 @@
 namespace MobilePlatformTools
 {
 	using System.Runtime.InteropServices;
-	using AOT;
 
 	/// <summary>
 	/// 
@@ -22,26 +21,25 @@ namespace MobilePlatformTools
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		/// <param name="listener">初始化回调</param>
-		void IBridge.Init(IBridgeListener listener)
+		/// <param name="option">初始化参数</param>
+		void IBridge.Init(InitializationOption option)
 		{
-			c_platform_tools_init(InitCallback);
+			c_platform_tools_init(option.onResponse);
 		}
 
 		/// <summary>
 		/// 振动
 		/// </summary>
-		/// <param name="effectType">振动类型</param>
-		void IBridge.Vibrator(VibratorEffectType effectType)
+		/// <param name="option">振动参数</param>
+		void IBridge.Vibrator(VibratorOption option)
 		{
-			c_platform_tools_vibrator((int)effectType);
+			c_platform_tools_vibrator((int)option.effectType, option.onResponse);
 		}
 
-		private static IBridgeListener _initListener;
-
 		/// <summary>
-		/// 初始化
+		/// /初始化
 		/// </summary>
+		/// <param name="callback">调用回调</param>
 		[DllImport("__Internal")]
 		private static extern void c_platform_tools_init(BridgeCallback callback);
 
@@ -49,20 +47,9 @@ namespace MobilePlatformTools
 		/// 振动
 		/// </summary>
 		/// <param name="effectType">振动类型</param>
+		/// <param name="callback">调用回调</param>
 		[DllImport("__Internal")]
-		private static extern void c_platform_tools_vibrator(int effectType);
-
-		/// <summary>
-		/// 初始化回调
-		/// </summary>
-		/// <param name="errCode">回调码</param>
-		/// <param name="errMsg">回调信息</param>
-		/// <param name="data">回调数据</param>
-		[MonoPInvokeCallback(typeof(BridgeCallback))]
-		public static void InitCallback(int errCode, string errMsg, string data)
-		{
-			_initListener?.OnCallback(errCode, errMsg, data);
-		}
+		private static extern void c_platform_tools_vibrator(int effectType, BridgeCallback callback);
 	}
 }
 #endif

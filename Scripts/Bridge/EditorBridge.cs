@@ -8,9 +8,11 @@
 // Create Time:		2024/09/20 20:54:37
 // *******************************************
 
+#if UNITY_EDITOR
+
 namespace MobilePlatformTools
 {
-	using UnityEngine;
+	using Newtonsoft.Json.Linq;
 
 	/// <summary>
 	/// 
@@ -20,19 +22,28 @@ namespace MobilePlatformTools
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		/// <param name="listener">初始化回调</param>
-		void IBridge.Init(IBridgeListener listener)
+		/// <param name="option">初始化参数</param>
+		void IBridge.Init(InitializationOption option)
 		{
-			listener?.OnCallback(0, "success", "");
+			JObject response = new JObject();
+			response[PlatformTools.RESPONSE_PROPERTY_NAME_CODE] = 0;
+			response[PlatformTools.RESPONSE_PROPERTY_NAME_MSG] = "editor";
+			option.onResponse(response.ToString());
 		}
 
 		/// <summary>
 		/// 振动
 		/// </summary>
-		/// <param name="effectType">振动类型</param>
-		void IBridge.Vibrator(VibratorEffectType effectType)
+		/// <param name="option">振动参数</param>
+		void IBridge.Vibrator(VibratorOption option)
 		{
-			Debug.Log("effectType===" + effectType);
+			JObject response = new JObject();
+			response[PlatformTools.RESPONSE_PROPERTY_NAME_CODE] = 0;
+			response[PlatformTools.RESPONSE_PROPERTY_NAME_MSG] = "editor";
+			response[PlatformTools.RESPONSE_PROPERTY_NAME_DATA] = option.effectType.ToString();
+			option.onResponse(response.ToString());
 		}
 	}
 }
+
+#endif

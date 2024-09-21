@@ -23,31 +23,28 @@ namespace MobilePlatformTools
 		private const string ManagerClassName = "com.platform.tools.MobilePlatformTools";
 		private static AndroidJavaObject api;
 		private static AndroidJavaObject currentActivity;
-		private static AndroidJavaClass VibratorEffectType;
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		/// <param name="listener">初始化回调</param>
-		void IBridge.Init(IBridgeListener listener)
+		/// <param name="option">初始化参数</param>
+		void IBridge.Init(InitializationOption option)
 		{
 			AndroidJavaClass unityPlayer = new AndroidJavaClass(UnityPlayerClassName);
 			currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 
 			AndroidJavaClass jc = new AndroidJavaClass(ManagerClassName);
 			api = jc.CallStatic<AndroidJavaObject>("getInstance");
-			api.Call("initMobilePlatformTools", currentActivity, listener);
-			
-			VibratorEffectType = new AndroidJavaClass("com.platform.tools.VibratorEffectType");
+			api.Call("initMobilePlatformTools", currentActivity, option);
 		}
 
 		/// <summary>
 		/// 振动
 		/// </summary>
-		/// <param name="effectType">振动类型</param>
-		void IBridge.Vibrator(VibratorEffectType effectType)
+		/// <param name="option">振动参数</param>
+		void IBridge.Vibrator(VibratorOption option)
 		{
-			api.Call("vibratorByEffectType", GetVibratorEffectType(effectType));
+			api.Call("vibratorByEffectType", GetVibratorEffectName(option.effectType), option);
 		}
 
 		/// <summary>
@@ -56,16 +53,16 @@ namespace MobilePlatformTools
 		/// <param name="effectType"></param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		private AndroidJavaObject GetVibratorEffectType(VibratorEffectType effectType)
+		private string GetVibratorEffectName(VibratorEffectType effectType)
 		{
 			switch (effectType)
 			{
-				case MobilePlatformTools.VibratorEffectType.Low:
-					return VibratorEffectType.GetStatic<AndroidJavaObject>("LOW");
-				case MobilePlatformTools.VibratorEffectType.Middle:
-					return VibratorEffectType.GetStatic<AndroidJavaObject>("MIDDLE");
-				case MobilePlatformTools.VibratorEffectType.High:
-					return VibratorEffectType.GetStatic<AndroidJavaObject>("HIGH");
+				case VibratorEffectType.Low:
+					return "LOW";
+				case VibratorEffectType.Middle:
+					return "MIDDLE";
+				case VibratorEffectType.High:
+					return "HIGH";
 				default:
 					throw new ArgumentOutOfRangeException(nameof(effectType), effectType, null);
 			}
