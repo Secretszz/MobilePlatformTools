@@ -20,7 +20,7 @@ namespace MobilePlatformTools
 		public const string RESPONSE_PROPERTY_NAME_DATA = "data";
 		public const int RESPONSE_CODE_SUCCESS = 0;
 		public const int RESPONSE_CODE_ERROR = -1;
-		
+
 		private static IBridge _bridge;
 
 		private static IBridge Bridge
@@ -58,6 +58,15 @@ namespace MobilePlatformTools
 		public static void Vibrator(VibratorOption option)
 		{
 			Bridge.Vibrator(option);
+		}
+
+		/// <summary>
+		/// 获取国家信息
+		/// </summary>
+		/// <param name="option">参数</param>
+		public static void GetCountryInfo(GetCountryInfoOption option)
+		{
+			Bridge.GetCountryInfo(option);
 		}
 	}
 }

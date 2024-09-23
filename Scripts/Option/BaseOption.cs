@@ -23,7 +23,7 @@ namespace MobilePlatformTools
 	/// 结果回调
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public delegate void ResponseCallback<in T>(T response) where T : BaseResponse;
+	public delegate void ResponseCallback<in T>(T response);
 
 	/// <summary>
 	/// 
@@ -32,7 +32,6 @@ namespace MobilePlatformTools
 #if UNITY_ANDROID
 	 : AndroidJavaProxy
 #endif
-			where T : BaseResponse
 	{
 #if UNITY_ANDROID
 		protected BaseOption() : base("com.platform.tools.BridgeCallback"){}

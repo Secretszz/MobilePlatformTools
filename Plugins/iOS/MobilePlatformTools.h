@@ -8,6 +8,7 @@
 #pragma mark - Callback define
 typedef void(* MobilePlatformTools_BridgeCallback)(const char *);
 
+
 #pragma mark - Constant
 
 static int ResponseCodeSuccess = 0;
@@ -40,6 +41,7 @@ static int VibratorEffectTypeHigh = 2;
 
 @interface MobilePlatformTools : NSObject
 +(void)init:(MobilePlatformTools_BridgeCallback)callback;
-+(void)vibrator:(UIImpactFeedbackStyle)style
++(void)vibrator:(int)effectType
        callback:(MobilePlatformTools_BridgeCallback)callback;
++(void)getCountryInfo:(MobilePlatformTools_BridgeCallback)callback;
 @end

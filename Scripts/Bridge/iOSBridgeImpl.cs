@@ -37,6 +37,15 @@ namespace MobilePlatformTools
 		}
 
 		/// <summary>
+		/// 获取国家信息
+		/// </summary>
+		/// <param name="option">参数</param>
+		void IBridge.GetCountryInfo(GetCountryInfoOption option)
+		{
+			c_platform_tools_getCountryInfo(option.onResponse);
+		}
+
+		/// <summary>
 		/// /初始化
 		/// </summary>
 		/// <param name="callback">调用回调</param>
@@ -50,6 +59,13 @@ namespace MobilePlatformTools
 		/// <param name="callback">调用回调</param>
 		[DllImport("__Internal")]
 		private static extern void c_platform_tools_vibrator(int effectType, BridgeCallback callback);
+
+		/// <summary>
+		/// 获取国家信息
+		/// </summary>
+		/// <param name="callback">调用回调</param>
+		[DllImport("__Internal")]
+		private static extern void c_platform_tools_getCountryInfo(BridgeCallback callback);
 	}
 }
 #endif

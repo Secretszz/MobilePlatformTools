@@ -43,7 +43,30 @@ namespace MobilePlatformTools
 			response[PlatformTools.RESPONSE_PROPERTY_NAME_DATA] = option.effectType.ToString();
 			option.onResponse(response.ToString());
 		}
+
+		/// <summary>
+		/// 获取国家信息
+		/// </summary>
+		/// <param name="option">参数</param>
+		void IBridge.GetCountryInfo(GetCountryInfoOption option)
+		{
+			JObject response = new JObject();
+			response[PlatformTools.RESPONSE_PROPERTY_NAME_CODE] = 0;
+			response[PlatformTools.RESPONSE_PROPERTY_NAME_MSG] = "editor";
+			response[PlatformTools.RESPONSE_PROPERTY_NAME_DATA] = JObject.FromObject(new CountryInfo
+			{
+					ip = "154.21.193.43",
+					city = "Los Angeles",
+					region = "California",
+					country = "US",
+					loc = "34.0522,-118.2437",
+					org = "AS174 Cogent Communications",
+					postal = "90009",
+					timezone = "America/Los_Angeles",
+					readme = "https://ipinfo.io/missingauth"
+			});
+			option.onResponse(response.ToString());
+		}
 	}
 }
-
 #endif

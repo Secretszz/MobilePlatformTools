@@ -48,6 +48,15 @@ namespace MobilePlatformTools
 		}
 
 		/// <summary>
+		/// 获取国家信息
+		/// </summary>
+		/// <param name="option">参数</param>
+		void IBridge.GetCountryInfo(GetCountryInfoOption option)
+		{
+			api.Call("getCountryInfo", option);
+		}
+
+		/// <summary>
 		/// 转换到java的VibratorEffectType对象
 		/// </summary>
 		/// <param name="effectType"></param>

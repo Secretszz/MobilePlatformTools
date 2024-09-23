@@ -90,10 +90,35 @@
     callback([[resp toJson] UTF8String]);
 }
 
-+ (void)vibrator:(UIImpactFeedbackStyle)style
++ (void)vibrator:(int)effectType
         callback:(MobilePlatformTools_BridgeCallback)callback {
-    UIImpactFeedbackGenerator* generator = [[UIImpactFeedbackGenerator alloc]initWithStyle:style];
+    UIImpactFeedbackGenerator* generator;
+    if (effectType == VibratorEffectTypeLow) {
+        generator = [[UIImpactFeedbackGenerator alloc]initWithStyle:UIImpactFeedbackStyleLight];
+    } else if (effectType == VibratorEffectTypeHigh){
+        generator = [[UIImpactFeedbackGenerator alloc]initWithStyle:UIImpactFeedbackStyleHeavy];
+    } else {
+        generator = [[UIImpactFeedbackGenerator alloc]initWithStyle:UIImpactFeedbackStyleMedium];
+    }
+
     [generator impactOccurred];
+    Response* resp = [Response successWithData:[NSNumber numberWithInt:effectType]];
+    callback([[resp toJson] UTF8String]);
+}
+
++(void)getCountryInfo:(MobilePlatformTools_BridgeCallback)callback{
+    NSURL* url = [NSURL URLWithString:@"https://api.ipify.org?format=json"];
+    NSError* error = nil;
+    NSMutableString* ip = [NSMutableString stringWithContentsOfURL:url
+                                                          encoding:NSUTF8StringEncoding
+                                                             error:&error];
+    NSData* data = [ip dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+    
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"https://ipinfo.io/%@/json", [dict objectForKey:@"ip"]]];
+    ip = [NSMutableString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+    Response* resp = [Response successWithData:ip];
+    callback([[resp toJson] UTF8String]);
 }
 
 @end
@@ -106,13 +131,9 @@ extern "C" void c_platform_tools_init(MobilePlatformTools_BridgeCallback callbac
 
 extern "C" void c_platform_tools_vibrator(int effectType,
                                           MobilePlatformTools_BridgeCallback callback){
-    if (effectType == VibratorEffectTypeLow) {
-        [MobilePlatformTools vibrator:UIImpactFeedbackStyleLight callback:callback];
-    } else if (effectType == VibratorEffectTypeMiddle){
-        [MobilePlatformTools vibrator:UIImpactFeedbackStyleMedium callback:callback];
-    } else if (effectType == VibratorEffectTypeHigh){
-        [MobilePlatformTools vibrator:UIImpactFeedbackStyleHeavy callback:callback];
-    } else {
-        Response* resp = [Response error:[NSString stringWithFormat:@"Unknown vibrator effect type: %d", effectType]];
-    }
+    [MobilePlatformTools vibrator:effectType callback:callback];
+}
+
+extern "C" void c_platform_tools_getCountryInfo(MobilePlatformTools_BridgeCallback callback){
+    [MobilePlatformTools getCountryInfo:callback];
 }

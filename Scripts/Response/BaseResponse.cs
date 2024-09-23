@@ -10,6 +10,9 @@
 
 namespace MobilePlatformTools
 {
+	using System;
+
+	[Serializable]
 	public class BaseResponse
 	{
 		public int code;

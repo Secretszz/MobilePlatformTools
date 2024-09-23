@@ -10,6 +10,8 @@
 
 namespace MobilePlatformTools
 {
+	using System;
+
 	/// <summary>
 	/// 
 	/// </summary>
@@ -18,6 +20,7 @@ namespace MobilePlatformTools
 		public VibratorEffectType effectType;
 	}
 
+	[Serializable]
 	public class VibratorResponse : BaseResponse<VibratorEffectType>
 	{
 

@@ -27,5 +27,11 @@ namespace MobilePlatformTools
 		/// </summary>
 		/// <param name="option">振动参数</param>
 		void Vibrator(VibratorOption option);
+
+		/// <summary>
+		/// 获取国家信息
+		/// </summary>
+		/// <param name="option">参数</param>
+		void GetCountryInfo(GetCountryInfoOption option);
 	}
 }
