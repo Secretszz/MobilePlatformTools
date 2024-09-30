@@ -1,0 +1,21 @@
+{
+  "name": "com.platform.tools",
+  "displayName": "Mobile Platform Tools",
+  "version": "1.0.0",
+  "description": "Mobile platform toolset",
+  "unity": "2022.3",
+  "author": {
+    "name": "Bridge",
+    "url": "https://github.com/Secretszz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Secretszz/MobilePlatformTools.git"
+  },
+  "dependencies":{
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  },
+  "publishConfig": {
+    "registry": "https://package.openupm.com"
+  }
+}
