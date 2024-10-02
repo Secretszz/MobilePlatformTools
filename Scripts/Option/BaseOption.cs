@@ -34,7 +34,7 @@ namespace MobilePlatformTools
 #endif
 	{
 #if UNITY_ANDROID
-		protected BaseOption() : base("com.platform.tools.BridgeCallback"){}
+		protected BaseOption() : base("com.platform.tools.callback.BridgeCallback"){}
 #endif
 
 		public ResponseCallback<T> response { private get; set; }
