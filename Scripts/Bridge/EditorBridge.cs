@@ -19,6 +19,9 @@ namespace MobilePlatformTools
 	/// </summary>
 	public class EditorBridge : IBridge
 	{
+		private const string RESPONSE_PROPERTY_NAME_CODE = "code";
+		private const string RESPONSE_PROPERTY_NAME_MSG = "msg";
+		private const string RESPONSE_PROPERTY_NAME_DATA = "data";
 		/// <summary>
 		/// 初始化
 		/// </summary>
@@ -26,9 +29,9 @@ namespace MobilePlatformTools
 		void IBridge.Init(InitializationOption option)
 		{
 			JObject response = new JObject();
-			response[PlatformTools.RESPONSE_PROPERTY_NAME_CODE] = 0;
-			response[PlatformTools.RESPONSE_PROPERTY_NAME_MSG] = "editor";
-			option.onResponse(response.ToString());
+			response[RESPONSE_PROPERTY_NAME_CODE] = 0;
+			response[RESPONSE_PROPERTY_NAME_MSG] = "editor";
+			option.OnResponse(response.ToString());
 		}
 
 		/// <summary>
@@ -38,10 +41,10 @@ namespace MobilePlatformTools
 		void IBridge.Vibrator(VibratorOption option)
 		{
 			JObject response = new JObject();
-			response[PlatformTools.RESPONSE_PROPERTY_NAME_CODE] = 0;
-			response[PlatformTools.RESPONSE_PROPERTY_NAME_MSG] = "editor";
-			response[PlatformTools.RESPONSE_PROPERTY_NAME_DATA] = option.effectType.ToString();
-			option.onResponse(response.ToString());
+			response[RESPONSE_PROPERTY_NAME_CODE] = 0;
+			response[RESPONSE_PROPERTY_NAME_MSG] = "editor";
+			response[RESPONSE_PROPERTY_NAME_DATA] = option.effectType.ToString();
+			option.OnResponse(response.ToString());
 		}
 
 		/// <summary>
@@ -51,9 +54,9 @@ namespace MobilePlatformTools
 		void IBridge.GetCountryInfo(GetCountryInfoOption option)
 		{
 			JObject response = new JObject();
-			response[PlatformTools.RESPONSE_PROPERTY_NAME_CODE] = 0;
-			response[PlatformTools.RESPONSE_PROPERTY_NAME_MSG] = "editor";
-			response[PlatformTools.RESPONSE_PROPERTY_NAME_DATA] = JObject.FromObject(new CountryInfo
+			response[RESPONSE_PROPERTY_NAME_CODE] = 0;
+			response[RESPONSE_PROPERTY_NAME_MSG] = "editor";
+			response[RESPONSE_PROPERTY_NAME_DATA] = JObject.FromObject(new CountryInfo
 			{
 					ip = "154.21.193.43",
 					city = "Los Angeles",
@@ -65,7 +68,7 @@ namespace MobilePlatformTools
 					timezone = "America/Los_Angeles",
 					readme = "https://ipinfo.io/missingauth"
 			});
-			option.onResponse(response.ToString());
+			option.OnResponse(response.ToString());
 		}
 	}
 }

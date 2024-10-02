@@ -10,45 +10,44 @@
 
 namespace MobilePlatformTools
 {
-	using UnityEngine;
+	using System;
 	using Newtonsoft.Json;
 
-	/// <summary>
-	/// 桥接通信回调
-	/// </summary>
-	/// <param name="response">回调数据</param>
-	public delegate void BridgeCallback(string response);
-
-	/// <summary>
-	/// 结果回调
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	public delegate void ResponseCallback<in T>(T response);
+	public interface IBaseOption
+	{
+		public const int CODE_SUCCESS = 1;
+		public const int CODE_CANCEL = 0;
+		void OnResponse(string response);
+	}
 
 	/// <summary>
 	/// 
 	/// </summary>
-	public class BaseOption<T>
-#if UNITY_ANDROID
-	 : AndroidJavaProxy
-#endif
+	public abstract class BaseOption<T> : IBaseOption
 	{
-#if UNITY_ANDROID
-		protected BaseOption() : base("com.platform.tools.callback.BridgeCallback"){}
-#endif
-
-		public ResponseCallback<T> response { private get; set; }
+		public event Action<T> onSuccess; 
+		public event Action onCancel; 
+		public event Action<int, string> onError; 
 
 		/// <summary>
 		/// 通信回调
 		/// </summary>
-		/// <param name="data">回调数据</param>
-#if UNITY_IOS
-		[AOT.MonoPInvokeCallback(typeof(BridgeCallback))]
-#endif
-		public void onResponse(string data)
+		/// <param name="response">回调数据</param>
+		public void OnResponse(string response)
 		{
-			response?.Invoke(JsonConvert.DeserializeObject<T>(data));
+			var res = JsonConvert.DeserializeObject<Response<T>>(response);
+			switch (res.code)
+			{
+				case IBaseOption.CODE_SUCCESS:
+					onSuccess?.Invoke(res.data);
+					break;
+				case IBaseOption.CODE_CANCEL:
+					onCancel?.Invoke();
+					break;
+				default:
+					onError?.Invoke(res.code, res.msg);
+					break;
+			}
 		}
 	}
 }

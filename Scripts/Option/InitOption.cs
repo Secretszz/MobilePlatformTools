@@ -13,7 +13,7 @@ namespace MobilePlatformTools
 	/// <summary>
 	/// 
 	/// </summary>
-	public class InitializationOption : BaseOption<BaseResponse>
+	public class InitializationOption : BaseOption<string>
 	{
 
 	}

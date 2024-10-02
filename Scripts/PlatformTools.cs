@@ -15,12 +15,6 @@ namespace MobilePlatformTools
 	/// </summary>
 	public static class PlatformTools
 	{
-		public const string RESPONSE_PROPERTY_NAME_CODE = "code";
-		public const string RESPONSE_PROPERTY_NAME_MSG = "msg";
-		public const string RESPONSE_PROPERTY_NAME_DATA = "data";
-		public const int RESPONSE_CODE_SUCCESS = 0;
-		public const int RESPONSE_CODE_ERROR = -1;
-
 		private static IBridge _bridge;
 
 		private static IBridge Bridge

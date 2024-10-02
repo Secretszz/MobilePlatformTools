@@ -15,17 +15,11 @@ namespace MobilePlatformTools
 	/// <summary>
 	/// 
 	/// </summary>
-	public class VibratorOption : BaseOption<VibratorResponse>
+	public class VibratorOption : BaseOption<VibratorEffectType>
 	{
 		public VibratorEffectType effectType;
 	}
 
-	[Serializable]
-	public class VibratorResponse : BaseResponse<VibratorEffectType>
-	{
-
-	}
-	
 	public enum VibratorEffectType
 	{
 		Low = 1,

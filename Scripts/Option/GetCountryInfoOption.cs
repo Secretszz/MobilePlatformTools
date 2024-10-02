@@ -15,15 +15,9 @@ namespace MobilePlatformTools
 	/// <summary>
 	/// 
 	/// </summary>
-	public class GetCountryInfoOption : BaseOption<CountryInfoResponse>
+	public class GetCountryInfoOption : BaseOption<CountryInfo>
 	{
 
-	}
-
-	[Serializable]
-	public class CountryInfoResponse : BaseResponse<CountryInfo>
-	{
-		
 	}
 
 	public class CountryInfo

@@ -10,20 +10,54 @@
 
 namespace MobilePlatformTools
 {
+	using Newtonsoft.Json;
 	using System;
 
+	/// <summary>
+	/// 与移动平台通信回复
+	/// </summary>
 	[Serializable]
-	public class BaseResponse
+	public class Response<T>
 	{
 		public int code;
 		public string msg;
-	}
-
-	/// <summary>
-	/// 
-	/// </summary>
-	public class BaseResponse<T> : BaseResponse
-	{
 		public T data;
+		
+		public static string Success()
+		{
+			return JsonConvert.SerializeObject(new Response<T>
+			{
+					code = IBaseOption.CODE_SUCCESS,
+					msg = "success"
+			});
+		}
+
+		public static string Success(T data)
+		{
+			return JsonConvert.SerializeObject(new Response<T>
+			{
+					code = IBaseOption.CODE_SUCCESS,
+					msg = "success",
+					data = data
+			});
+		}
+
+		public static string Cancel()
+		{
+			return JsonConvert.SerializeObject(new Response<T>
+			{
+					code = IBaseOption.CODE_CANCEL,
+					msg = "cancel"
+			});
+		}
+		
+		public static string Error(int code, string msg)
+		{
+			return JsonConvert.SerializeObject(new Response<T>
+			{
+					code = code,
+					msg = msg
+			});
+		}
 	}
 }
