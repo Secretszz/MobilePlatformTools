@@ -23,17 +23,7 @@
     Response* resp = [[Response alloc] init];
     resp.code = [NSNumber numberWithInt:ResponseCodeSuccess];
     resp.message = ResponseMessageSuccess;
-    NSString *data = @"";
-    if (obj != nil){
-        NSError *error = nil;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data
-                                                           options:0
-                                                             error:&error];
-        if ([jsonData length] && error == nil){
-            data = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        }
-    }
-    resp.data = data;
+    resp.data = obj;
     return resp;
 }
 
@@ -55,9 +45,11 @@
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
     [dictionary setObject:_code forKey:@"code"];
     [dictionary setObject:_message forKey:@"message"];
-    [dictionary setObject:_data forKey:@"data"];
+    if (_data != nil){
+        [dictionary setObject:_data forKey:@"data"];
+    }
     NSError* error;
-    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:self options:NSJSONWritingPrettyPrinted error:&error];
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:&error];
     NSString* jsonString;
     if (!jsonData) {
         NSLog(@"%@", error);

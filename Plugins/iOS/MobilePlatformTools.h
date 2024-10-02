@@ -24,11 +24,11 @@ static int VibratorEffectTypeHigh = 2;
 {
     @private NSNumber* _code;
     @private NSString* _message;
-    @private NSString* _data;
+    @private id _data;
 }
 -(void)setCode:(NSNumber*)code;
 -(void)setMessage:(NSString*)message;
--(void)setData:(NSString*)data;
+-(void)setData:(id)data;
 
 +(instancetype)success;
 +(instancetype)successWithData:(id) data;
